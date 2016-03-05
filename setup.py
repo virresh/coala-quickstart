@@ -11,6 +11,9 @@ except (ValueError, UnicodeError):
 with open('requirements.txt') as requirements:
     required = requirements.read().splitlines()
 
+with open('test-requirements.txt') as requirements:
+    test_required = requirements.read().splitlines()
+
 if __name__ == "__main__":
     setup(name='coala-quickstart',
           version='0.1.0.dev0',
@@ -23,6 +26,7 @@ if __name__ == "__main__":
           platforms='any',
           packages=find_packages(exclude=["build.*", "*.tests.*", "*.tests"]),
           install_requires=required,
+          tests_require=test_required,
           license="AGPL-3.0",
           long_description="coala-quickstart is a tool to help you "
                            "set up coala easier "

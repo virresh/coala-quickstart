@@ -1,0 +1,14 @@
+dependencies:
+  cache_directories:
+    - ~/.pyenv/versions/3.3.6
+    - ~/.pyenv/versions/3.4.3
+    - ~/.pyenv/versions/3.5.1
+  override:
+    - bash .ci/deps.sh
+
+test:
+  override:
+    - bash .ci/tests.sh:
+        parallel: true
+    - python3 setup.py install:
+        parallel: true
