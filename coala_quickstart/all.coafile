@@ -1,0 +1,18 @@
+[python-stage-1]
+files = **/*.py
+use_spaces = True
+max_line_length = 120
+
+bears = SpaceConsistencyBear, PyUnusedCodeBear
+
+[python-stage-2-pep8]  # Do this after removing unused code so it doesn't clash
+files = **/*.py
+use_spaces = True
+max_line_length = 120
+
+bears = PEP8Bear
+
+[python-stage-3-linelength]  # PEP8Bear sometimes doesn't get the length right
+max_line_length = 120
+
+bears = LineLengthBear
