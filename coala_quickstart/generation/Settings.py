@@ -2,6 +2,9 @@ import os
 from collections import OrderedDict
 
 from pyprint.NullPrinter import NullPrinter
+from pyprint.ConsolePrinter import ConsolePrinter
+from coalib.output.ConsoleInteraction import acquire_settings
+from coalib.settings.SectionFilling import fill_settings
 from coalib.output.printers.LogPrinter import LogPrinter
 from coala_utils.Extensions import exts
 from coala_quickstart.generation.Utilities import (
@@ -101,6 +104,9 @@ def generate_settings(project_dir, project_files, ignore_globs, relevant_bears):
                 lang,
                 extset[lang],
                 relevant_bears[lang_map[lang]])
+
+    log_printer = LogPrinter(ConsolePrinter())
+    fill_settings(settings, acquire_settings, log_printer)
 
     return settings
 
