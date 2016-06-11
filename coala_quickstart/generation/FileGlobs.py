@@ -1,6 +1,8 @@
 import os
 
 from coalib.parsing.Globbing import glob_escape
+from coalib.misc.Constants import TRUE_STRINGS
+from coala_quickstart.generation.Utilities import get_gitignore_glob
 from coala_utils.Question import ask_question
 from coala_quickstart.Strings import GLOB_HELP
 from coalib.collecting.Collectors import collect_files
