@@ -26,8 +26,8 @@ class TestQuestion(unittest.TestCase):
         open(os.path.join("ignore_dir", "src.c"), "w").close()
         open(os.path.join("ignore_dir", "src.js"), "w").close()
 
-        with suppress_stdout(), simulate_console_inputs("**.c", "ignore_dir/**"):
-            res = get_project_files(self.log_printer, self.printer, os.getcwd())
+        with suppress_stdout(), simulate_console_inputs("ignore_dir/**"):
+            res, _ = get_project_files(self.log_printer, self.printer, os.getcwd())
             self.assertIn(os.path.join(os.getcwd(), "src", "file.c"), res)
             self.assertIn(os.path.join(os.getcwd(), "root.c"), res)
             self.assertNotIn(os.path.join(os.getcwd(), "ignore_dir/src.c"), res)

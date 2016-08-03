@@ -18,16 +18,21 @@ def get_project_files(log_printer, printer, project_dir):
     :return:
         A list of file paths matching the files.
     """
-    printer.print(GLOB_HELP)
-    file_globs = ask_question(
-        "Which files do you want coala to run on?",
-        default="**",
-        printer=printer,
-        typecast=list)
-    ignore_globs = ask_question(
-        "Which files do you want coala to run on?",
-        printer=printer,
-        typecast=list)
+    file_globs = ["**"]
+
+    ignore_globs = None
+    if os.path.isfile(os.path.join(project_dir, ".gitignore")):
+        printer.print("The contents of your .gitignore file for the project "
+                      "will be automatically loaded as the files to ignore.",
+                      color="green")
+        ignore_globs = get_gitignore_glob(project_dir)
+
+    if ignore_globs is None:
+        printer.print(GLOB_HELP)
+        ignore_globs = ask_question(
+            "Which files do you want coala to ignore?",
+            printer=printer,
+            typecast=list)
     printer.print()
 
     escaped_project_dir = glob_escape(project_dir)
@@ -36,9 +41,11 @@ def get_project_files(log_printer, printer, project_dir):
     ignore_path_globs = [os.path.join(
         escaped_project_dir, glob_exp) for glob_exp in ignore_globs]
 
+    ignore_path_globs.append(os.path.join(escaped_project_dir, ".git/**"))
+
     file_paths = collect_files(
         file_path_globs,
         log_printer,
         ignored_file_paths=ignore_path_globs)
 
-    return file_paths
+    return file_paths, ignore_globs
