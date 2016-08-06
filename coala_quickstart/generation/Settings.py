@@ -103,3 +103,28 @@ def generate_settings(project_dir, project_files, ignore_globs, relevant_bears):
                 relevant_bears[lang_map[lang]])
 
     return settings
+
+
+def write_coafile(printer, project_dir, settings):
+    """
+    Writes the coafile to disk.
+
+    :param printer:
+        A ``ConsolePrinter`` object used for console interactions.
+    :param project_dir:
+        Full path of the user's project directory.
+    :param settings:
+        A dict with section name as key and a ``Section`` object as value.
+    """
+    coafile = os.path.join(project_dir, ".coafile")
+    if os.path.isfile(coafile):
+        printer.print("'" + coafile + "' already exists.\nThe settings will be"
+                      " written to '" + coafile + ".new'",
+                      color="yellow")
+        coafile = coafile + ".new"
+
+    writer = ConfWriter(coafile)
+    writer.write_sections(settings)
+    writer.close()
+
+    printer.print("'" + coafile + "' successfully generated.", color="green")
