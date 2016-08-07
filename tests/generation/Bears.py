@@ -22,10 +22,10 @@ class TestBears(unittest.TestCase):
         sys.argv = self.old_argv
 
     def test_filter_relevant_bears(self):
-        res = filter_relevant_bears([('Python', 70), ('YAML', 20)])
-        self.assertIn("YAML", res)
+        res = filter_relevant_bears([('Python', 70), ('C', 20)])
+        self.assertIn("C", res)
         self.assertIn("Python", res)
-        self.assertTrue(len(res["YAML"]) > 0)
+        self.assertTrue(len(res["C"]) > 0)
         self.assertTrue(len(res["Python"]) > 0)
 
     def test_print_relevant_bears(self):
