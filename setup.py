@@ -16,12 +16,14 @@ with open('test-requirements.txt') as requirements:
 
 if __name__ == "__main__":
     setup(name='coala-quickstart',
-          version='0.1.0.dev0',
+          version='0.2.0.dev0',
           description='Quickstart for coala (Code Analysis Application)',
           author="The coala developers",
-          maintainer="Adrian Zatreanu, Alexandros Dimos",
+          maintainer="Adrian Zatreanu, Alexandros Dimos,"
+                     "Adhityaa Chandrasekar",
           maintainer_email=('adrian.zatreanu@eestec.ro, '
-                            'alexandros.dimos.95@gmail.com'),
+                            'alexandros.dimos.95@gmail.com, '
+                            'c.adhityaa@gmail.com'),
           url='http://coala.rtfd.org/',
           platforms='any',
           packages=find_packages(exclude=["build.*", "*.tests.*", "*.tests"]),
