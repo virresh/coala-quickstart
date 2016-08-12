@@ -1,0 +1,11 @@
+IMPORTANT_BEAR_LIST = {"C": {"ClangBear",
+                             "ClangComplexityBear",
+                             "CSecurityBear",
+                             "GNUIndentBear"},
+                       "JavaScript": {"JSHintBear",
+                                      "JSComplexityBear"},
+                       "Java": {"JavaPMD",
+                                "CheckstyleBear"},
+                       "Python": {"PEP8Bear",
+                                  "PyLintBear",
+                                  "YapfBear"}}

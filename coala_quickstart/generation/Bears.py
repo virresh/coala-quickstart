@@ -1,5 +1,6 @@
 from pyprint.NullPrinter import NullPrinter
 
+from coala_quickstart.Constants import IMPORTANT_BEAR_LIST
 from coala_quickstart.Strings import BEAR_HELP
 from coala_utils.Question import ask_question
 from coalib.settings.ConfigurationGathering import (
@@ -24,8 +25,16 @@ def filter_relevant_bears(used_languages):
     log_printer = LogPrinter(NullPrinter())
     used_languages.append(("All", 100))
 
-    bears_by_lang = {lang: set(inverse_dicts(*get_filtered_bears(
+    all_bears_by_lang = {lang: set(inverse_dicts(*get_filtered_bears(
         [lang], log_printer)).keys()) for lang, _ in used_languages}
+
+    bears_by_lang = {}
+    for lang in all_bears_by_lang:
+        if lang in IMPORTANT_BEAR_LIST:
+            bears_by_lang[lang] = {bear for bear in all_bears_by_lang[lang]
+                                   if bear.name in IMPORTANT_BEAR_LIST[lang]}
+        else:
+            bears_by_lang[lang] = all_bears_by_lang[lang]
 
     # Each language would also have the language independent bears. We remove
     # those and put them in the "All" category.
