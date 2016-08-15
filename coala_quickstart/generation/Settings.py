@@ -30,7 +30,7 @@ def generate_section(section_name, extensions_used, bears):
     section = Section(section_name, None)
 
     section["bears"] = ", ".join(bear.name for bear in bears)
-    section["files"] = ", ".join("**" + ext for ext in extensions_used)
+    section["files"] = ", ".join("**" + ext for ext in set(extensions_used))
 
     return section
 
