@@ -21,7 +21,7 @@ if __name__ == "__main__":
           author="The coala developers",
           maintainer="Adrian Zatreanu, Alexandros Dimos,"
                      "Adhityaa Chandrasekar",
-          maintainer_email=('adrian.zatreanu@eestec.ro, '
+          maintainer_email=('adrianzatreanu1@gmail.com, '
                             'alexandros.dimos.95@gmail.com, '
                             'c.adhityaa@gmail.com'),
           url='http://coala.rtfd.org/',
