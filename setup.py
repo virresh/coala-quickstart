@@ -16,7 +16,7 @@ with open('test-requirements.txt') as requirements:
 
 if __name__ == "__main__":
     setup(name='coala-quickstart',
-          version='0.2.0.dev0',
+          version='0.3.0',
           description='Quickstart for coala (Code Analysis Application)',
           author="The coala developers",
           maintainer="Adrian Zatreanu, Alexandros Dimos,"
