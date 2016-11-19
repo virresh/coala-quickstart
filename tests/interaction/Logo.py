@@ -1,8 +1,7 @@
 import unittest
 
 from pyprint.ConsolePrinter import ConsolePrinter
-from coalib.misc.ContextManagers import (
-    simulate_console_inputs, suppress_stdout, retrieve_stdout)
+from coalib.misc.ContextManagers import retrieve_stdout
 from coala_quickstart.interaction.Logo import (
     print_welcome_message, print_side_by_side)
 

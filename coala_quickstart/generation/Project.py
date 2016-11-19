@@ -3,7 +3,6 @@ import operator
 from collections import defaultdict
 
 from coala_utils.string_processing.StringConverter import StringConverter
-from coala_utils.Question import ask_question
 from coala_utils.Extensions import exts
 
 

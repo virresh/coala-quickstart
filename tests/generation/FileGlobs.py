@@ -4,7 +4,7 @@ import unittest
 from pyprint.ConsolePrinter import ConsolePrinter
 from coalib.output.printers.LogPrinter import LogPrinter
 from coalib.misc.ContextManagers import (
-    simulate_console_inputs, suppress_stdout, retrieve_stdout)
+    simulate_console_inputs, suppress_stdout)
 from coala_quickstart.generation.FileGlobs import get_project_files
 from coala_quickstart.generation.Utilities import get_gitignore_glob
 from coalib.collecting.Collectors import collect_files

@@ -1,12 +1,10 @@
 import sys
-import os
 import unittest
 from copy import deepcopy
 
 from pyprint.ConsolePrinter import ConsolePrinter
 from coalib.output.printers.LogPrinter import LogPrinter
-from coalib.misc.ContextManagers import (
-    simulate_console_inputs, suppress_stdout, retrieve_stdout)
+from coalib.misc.ContextManagers import retrieve_stdout
 from coala_quickstart.generation.Bears import (
     filter_relevant_bears, print_relevant_bears)
 

@@ -6,9 +6,8 @@ from pyprint.ConsolePrinter import ConsolePrinter
 from coalib.output.ConsoleInteraction import acquire_settings
 from coalib.settings.SectionFilling import fill_settings
 from coalib.output.printers.LogPrinter import LogPrinter
-from coala_utils.Extensions import exts
 from coala_quickstart.generation.Utilities import (
-    split_by_language, get_extensions, get_gitignore_glob)
+    split_by_language, get_extensions)
 from coalib.settings.Section import Section
 from coalib.output.ConfWriter import ConfWriter
 from coalib.collecting.Collectors import collect_files

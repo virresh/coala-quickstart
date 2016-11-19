@@ -2,12 +2,8 @@ from pyprint.NullPrinter import NullPrinter
 
 from coala_quickstart.Constants import IMPORTANT_BEAR_LIST
 from coala_quickstart.Strings import BEAR_HELP
-from coala_utils.Question import ask_question
-from coalib.settings.ConfigurationGathering import (
-    load_configuration, get_filtered_bears)
+from coalib.settings.ConfigurationGathering import get_filtered_bears
 from coalib.misc.DictUtilities import inverse_dicts
-from coalib.collecting.Collectors import (
-    collect_all_bears_from_sections, filter_section_bears_by_languages)
 from coalib.output.printers.LogPrinter import LogPrinter
 
 
