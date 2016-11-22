@@ -1,7 +1,7 @@
 .. image:: https://cloud.githubusercontent.com/assets/7521600/19196124/e6ea06dc-8cd1-11e6-84a8-c51c899a1f36.png
 
 coala-quickstart: personalized coala setup for your project
--------------
+-----------------------------------------------------------
 coala-quickstart is a tool that helps users to quickly get started
 with coala. It can generate a ``.coafile`` (
 `coala <https://github.com/coala/coala>`__'s configuration
