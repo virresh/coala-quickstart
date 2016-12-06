@@ -49,10 +49,9 @@ def main():
     printer = ConsolePrinter()
     log_printer = LogPrinter(printer)
 
-    print_welcome_message(printer)
-
     project_dir = os.getcwd()
     if not args.non_interactive:
+        print_welcome_message(printer)
         project_dir = ask_question(
             "What is your project directory?",
             default=project_dir,
