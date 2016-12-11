@@ -1,7 +1,7 @@
 import unittest
 
 from pyprint.ConsolePrinter import ConsolePrinter
-from coalib.misc.ContextManagers import retrieve_stdout
+from coala_utils.ContextManagers import retrieve_stdout
 from coala_quickstart.generation.Project import (
     get_used_languages, print_used_languages)
 
