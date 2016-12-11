@@ -30,4 +30,4 @@ class TestBears(unittest.TestCase):
         with retrieve_stdout() as custom_stdout:
             print_relevant_bears(self.printer, filter_relevant_bears(
                 [('Python', 70), ('Unknown', 30)]))
-            self.assertIn("PEP8Bear", custom_stdout.getvalue())
+            self.assertIn("PycodestyleBear", custom_stdout.getvalue())

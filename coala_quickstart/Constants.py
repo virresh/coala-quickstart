@@ -8,4 +8,4 @@ IMPORTANT_BEAR_LIST = {
     'CSS': {'CSSLintBear', 'SpaceConsistencyBear'},
     "JavaScript": {"JSHintBear", "JSComplexityBear"},
     "Java": {"JavaPMD", "CheckstyleBear"},
-    "Python": {"PEP8Bear"}}
+    "Python": {"PycodestyleBear"}}
