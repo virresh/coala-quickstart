@@ -19,7 +19,7 @@ default_actions =
     PyUnusedCodeBear: ApplyPatchAction
 
 [autopep8]
-bears = PEP8Bear
+bears = PEP8Bear, PycodestyleBear
 
 default_actions = PEP8Bear: ApplyPatchAction
 
