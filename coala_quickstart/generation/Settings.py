@@ -92,11 +92,11 @@ def generate_settings(project_dir, project_files, ignore_globs, relevant_bears):
         [ext for lang in lang_files for ext in extset[lang]],
         relevant_bears[lang_map["all"]])
 
-    settings["default"]["ignore"] = generate_ignore_field(
-        project_dir,
-        lang_files.keys(),
-        extset,
-        ignore_globs)
+    ignored_files = generate_ignore_field(project_dir, lang_files.keys(),
+                                          extset, ignore_globs)
+
+    if ignored_files:
+        settings["default"]["ignore"] = ignored_files
 
     for lang in lang_files:
         if lang != "unknown" and lang != "all":
