@@ -1,5 +1,5 @@
 IMPORTANT_BEAR_LIST = {
-    'All': {'FilenameBear', 'InvalidLinkBear', 'LineCountBear', 'coalaBear'},
+    'All': {'FilenameBear', 'InvalidLinkBear', 'LineCountBear'},
     "C": {"GNUIndentBear", 'CSecurityBear', 'ClangComplexityBear'},
     'C#': {'CPDBear', 'CSharpLintBear', 'SpaceConsistencyBear'},
     'C++': {'GNUIndentBear', 'CPDBear', 'CPPCheckBear', 'CPPCleanBear',
