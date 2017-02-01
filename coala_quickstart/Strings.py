@@ -40,7 +40,7 @@ all its contents but exclude your .git directory and all
 question and `.git/**,**/*.o` for the second question.
 """.format(GLOB_HELP_URL)
 
-BEAR_DOCS_URL = ("https://github.com/coala-analyzer/bear-docs/blob/master/"
+BEAR_DOCS_URL = ("https://github.com/coala/bear-docs/blob/master/"
                  "README.rst#supported-languages")
 BEAR_HELP = """
 A coala bear is a plugin that contains the checking routines. It may be
