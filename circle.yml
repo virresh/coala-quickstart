@@ -11,3 +11,5 @@ test:
         parallel: true
     - python3 setup.py install:
         parallel: true
+    - codecov:
+        parallel: true
