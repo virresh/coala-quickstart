@@ -7,7 +7,7 @@ dependencies:
 
 test:
   override:
-    - bash .ci/tests.sh:
+    - pytest:
         parallel: true
     - python3 setup.py install:
         parallel: true
