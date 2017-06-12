@@ -98,6 +98,14 @@ class InfoExtractorTest(unittest.TestCase):
                 self.assertIsInstance(
                     extracted_info[tf]['DummyInfo'][0],
                     self.DummyInfo)
+                self.assertEqual(
+                    extracted_info[tf]['DummyInfo'][0].source, tf)
+
+                # test if the extractor field is added automatically
+                self.assertIsInstance(
+                    extracted_info[tf]['DummyInfo'][0].extractor,
+                    InfoExtractor)
+
 
     def test_multiple_information(self):
 
