@@ -25,18 +25,18 @@ class InfoTest(unittest.TestCase):
 
         class InfoA(Info):
             description = 'Information A'
+            value_type = (str, int)
 
-            def __init__(self,
-                         source,
-                         value,
-                         extra_param):
-                super().__init__(source, value)
-                self.extra_param = extra_param
+        class InfoB(Info):
+            description = "Info class without value_type"
 
         self.info_a = InfoA(
             'source_file',
             'info_a_value',
-            'extra_param_value')
+            extra_param='extra_param_value')
+
+        self.InfoA = InfoA
+        self.InfoB = InfoB
 
     def test_main(self):
         self.assertEqual(self.base_info.name, 'Info')
@@ -51,3 +51,11 @@ class InfoTest(unittest.TestCase):
         self.assertEqual(self.info_a.source, 'source_file')
         self.assertEqual(self.info_a.extra_param, 'extra_param_value')
         self.assertEqual(self.info_a.description, 'Information A')
+
+    def test_value_type(self):
+        with self.assertRaisesRegexp(
+                TypeError,
+                'The value 5.5 does not match the allowed value types'):
+            self.InfoA("source_file", 5.5)
+
+        self.InfoB("source_file", 5.5)
