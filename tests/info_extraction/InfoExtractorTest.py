@@ -19,7 +19,7 @@ class InfoExtractorTest(unittest.TestCase):
 
         class DummyInfoExtractor(InfoExtractor):
 
-            def parse_file(self, file_content):
+            def parse_file(self, fname, file_content):
                 return file_content
 
             def find_information(self, fname, parsed_file):
@@ -29,7 +29,7 @@ class InfoExtractorTest(unittest.TestCase):
 
         class DummyMultiInfoExtractor(InfoExtractor):
 
-            def parse_file(self, file_content):
+            def parse_file(self, fname, file_content):
                 return file_content
 
             def find_information(self, fname, parsed_file):
@@ -46,7 +46,7 @@ class InfoExtractorTest(unittest.TestCase):
 
         class NoInfoExtractor(InfoExtractor):
 
-            def parse_file(self, file_content):
+            def parse_file(self, fname, file_content):
                 return file_content
 
             def find_information(self, fname, parsed_file):
@@ -63,7 +63,7 @@ class InfoExtractorTest(unittest.TestCase):
             ['**'],
             self.current_dir)
 
-        self.assertRaises(NotImplementedError, uut.parse_file, '')
+        self.assertRaises(NotImplementedError, uut.parse_file, 'foo', '')
         self.assertRaises(
             NotImplementedError,
             uut.find_information,
@@ -105,7 +105,6 @@ class InfoExtractorTest(unittest.TestCase):
                 self.assertIsInstance(
                     extracted_info[tf]['DummyInfo'][0].extractor,
                     InfoExtractor)
-
 
     def test_multiple_information(self):
 
@@ -159,3 +158,27 @@ class InfoExtractorTest(unittest.TestCase):
 
             for tf in target_filenames:
                 self.assertIsNone(extracted_info.get(tf))
+
+    def test_filemname_field(self):
+
+        class TestInfoExtractor(InfoExtractor):
+
+            def parse_file(self, fname, file_content):
+                assert os.path.exists(fname) == 1
+
+            def find_information(self, fname, parsed_file):
+                return []
+
+        target_filenames = ['target_file_1']
+
+        target_file_contents = ['Some content.']
+
+        uut = TestInfoExtractor(
+            ['target_file_**'],
+            self.current_dir)
+
+        with generate_files(
+                target_filenames,
+                target_file_contents,
+                self.current_dir) as gen_file:
+            uut.extract_information()
