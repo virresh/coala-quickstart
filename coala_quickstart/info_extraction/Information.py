@@ -27,6 +27,21 @@ class ProjectDependencyInfo(Info):
         super().__init__(source, value, extractor, version=version, url=url)
 
 
+class StyleInfo(Info):
+    description = "Information related to code styling."
+
+    def __init__(self,
+                 source,
+                 value,
+                 extractor=None,
+                 scope=["**"]):
+        """
+        :param scope: list of files to which the styling information
+                      is applicable.
+        """
+        super().__init__(source, value, extractor, scope=scope)
+
+
 class PathsInfo(Info):
     description = "File path globs mentioned in the file."
     value_type = ([str],)
@@ -56,3 +71,38 @@ class ManFilesInfo(Info):
                         the man pages provided in value argument.
         """
         super().__init__(source, value, extractor, keyword=keyword)
+
+
+class IndentStyleInfo(StyleInfo):
+    description = "'Tab' or 'Space' to use hard tabs or soft tabs."
+    value_type = ('tab', 'space')
+
+
+class IndentSizeInfo(StyleInfo):
+    description = "The number of columns used for each indentation level."
+    value_type = (int,)
+    example_values = [2, 4]
+
+
+class TrailingWhitespaceInfo(StyleInfo):
+    description = ("Information representing whether whitespace characters "
+                   "preceding newline characters are allowed or not.")
+    value_type = (bool,)
+
+
+class FinalNewlineInfo(StyleInfo):
+    description = ("Information representing whether to enformce file ending "
+                   " with a newline or not.")
+    value_type = (bool,)
+
+
+class CharsetInfo(StyleInfo):
+    description = "Information regarding character set."
+    value_type = (str,)
+    example_values = ["utf-8", "latin1", "utf-8-bom"]
+
+
+class LineBreaksInfo(StyleInfo):
+    description = ('Information regarding how line breaks are represented '
+                   'i.e. "lf", "cr", or "crlf"')
+    value_type = ('lf', 'cr', 'crlf')
