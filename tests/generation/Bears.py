@@ -43,10 +43,10 @@ class TestBears(unittest.TestCase):
         os.chdir("bears_ci_testfiles")
         with retrieve_stdout() as custom_stdout:
             main()
-            self.assertNotIn("usable", 
-                custom_stdout.getvalue())
+            self.assertNotIn("usable",
+                             custom_stdout.getvalue())
         os.remove('.coafile')
-        os.chdir(orig_cwd) 
+        os.chdir(orig_cwd)
 
     def test_bears_ci_mode(self):
         sys.argv.append('--ci')
@@ -55,7 +55,7 @@ class TestBears(unittest.TestCase):
         os.chdir("bears_ci_testfiles")
         with retrieve_stdout() as custom_stdout:
             main()
-            self.assertIn("usable", 
-                custom_stdout.getvalue())
+            self.assertIn("usable",
+                          custom_stdout.getvalue())
         os.remove('.coafile')
-        os.chdir(orig_cwd)   
+        os.chdir(orig_cwd)

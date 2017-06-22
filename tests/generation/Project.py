@@ -13,17 +13,17 @@ class TestPopularLanguages(unittest.TestCase):
 
     def test_get_used_languages(self):
         file_lists = [["/tmp/file.py", "/tmp/file.py"],
-            ["/tmp/file.py", "/tmp/test.cpp"],
-            ["/tmp/file.py"],
-            ["/tmp/file.py", "/tmp/unknown.extension"],
-            ["/tmp/unknown.extension"],
-            []]
+                      ["/tmp/file.py", "/tmp/test.cpp"],
+                      ["/tmp/file.py"],
+                      ["/tmp/file.py", "/tmp/unknown.extension"],
+                      ["/tmp/unknown.extension"],
+                      []]
         results = [[('Python', 100)],
-            [('Python', 50), ('C++', 50)],
-            [('Python', 100)],
-            [('Python', 50)],
-            [],
-            []]
+                   [('Python', 50), ('C++', 50)],
+                   [('Python', 100)],
+                   [('Python', 50)],
+                   [],
+                   []]
 
         for file_list, expected_result in zip(file_lists, results):
             result = get_used_languages(file_list)

@@ -28,7 +28,6 @@ class InfoExtractorTest(unittest.TestCase):
                     fname,
                     'Dummy information it is!')]
 
-
         class DummyMultiInfoExtractor(InfoExtractor):
 
             def parse_file(self, fname, file_content):
@@ -134,7 +133,6 @@ class InfoExtractorTest(unittest.TestCase):
                 self.assertIsInstance(
                     extracted_info[tf]['DummyInfo'][0].extractor,
                     InfoExtractor)
-
 
     def test_multiple_information(self):
 
@@ -259,8 +257,8 @@ class InfoExtractorTest(unittest.TestCase):
                 self.current_dir) as gen_files:
 
             uut = self.WrongSupportedInfoExtractor(
-            ['target_file_**'],
-            self.current_dir)
+                ['target_file_**'],
+                self.current_dir)
 
             with self.assertRaisesRegexp(
                     ValueError,

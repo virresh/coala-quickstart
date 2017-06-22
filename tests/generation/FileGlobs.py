@@ -30,11 +30,16 @@ class TestQuestion(unittest.TestCase):
         open(os.path.join("ignore_dir", "src.js"), "w").close()
 
         with suppress_stdout(), simulate_console_inputs("ignore_dir/**"):
-            res, _ = get_project_files(self.log_printer, self.printer, os.getcwd())
-            self.assertIn(os.path.normcase(os.path.join(os.getcwd(), "src", "file.c")), res)
-            self.assertIn(os.path.normcase(os.path.join(os.getcwd(), "root.c")), res)
-            self.assertNotIn(os.path.normcase(os.path.join(os.getcwd(), "ignore_dir/src.c")), res)
-            self.assertNotIn(os.path.normcase(os.path.join(os.getcwd(), "ignore_dir/src.js")), res)
+            res, _ = get_project_files(
+                self.log_printer, self.printer, os.getcwd())
+            self.assertIn(os.path.normcase(
+                os.path.join(os.getcwd(), "src", "file.c")), res)
+            self.assertIn(os.path.normcase(
+                os.path.join(os.getcwd(), "root.c")), res)
+            self.assertNotIn(os.path.normcase(
+                os.path.join(os.getcwd(), "ignore_dir/src.c")), res)
+            self.assertNotIn(os.path.normcase(
+                os.path.join(os.getcwd(), "ignore_dir/src.js")), res)
 
         os.chdir(orig_cwd)
 
@@ -57,21 +62,21 @@ __pycache__
 # End of gitignore""")
 
         files = [os.path.join("src", "main.c"),
-            os.path.join("src", "main.h"),
-            os.path.join("src", "lib", "ssl.c"),
-            os.path.join("src", "tests", "main.c"),
-            os.path.join("src", "main.py"),
-            os.path.join("src", "upload.c"),
-            ".coafile"]
+                 os.path.join("src", "main.h"),
+                 os.path.join("src", "lib", "ssl.c"),
+                 os.path.join("src", "tests", "main.c"),
+                 os.path.join("src", "main.py"),
+                 os.path.join("src", "upload.c"),
+                 ".coafile"]
         ignored_files = [os.path.join("build", "main.c"),
-            os.path.join("tests", "run.c"),
-            os.path.join("src", "build", "main.c"),
-            "ignore.c",
-            os.path.join("src", "ignore.c"),
-            "globexp.py",
-            "upload.c",
-            os.path.join("src", "main.pyc"),
-            "run.pyc"]
+                         os.path.join("tests", "run.c"),
+                         os.path.join("src", "build", "main.c"),
+                         "ignore.c",
+                         os.path.join("src", "ignore.c"),
+                         "globexp.py",
+                         "upload.c",
+                         os.path.join("src", "main.pyc"),
+                         "run.pyc"]
 
         for file in files + ignored_files:
             os.makedirs(os.path.dirname(os.path.abspath(file)), exist_ok=True)
@@ -97,15 +102,14 @@ __pycache__
         os.remove(".gitignore")
         os.chdir(orig_cwd)
 
-
     def test_get_project_files_ci_mode(self):
         orig_cwd = os.getcwd()
-        os.chdir(os.path.dirname(os.path.realpath(__file__)) + 
-            os.sep + "file_globs_ci_testfiles")
+        os.chdir(os.path.dirname(os.path.realpath(__file__)) +
+                 os.sep + "file_globs_ci_testfiles")
 
         with suppress_stdout():
-            res, _ = get_project_files(self.log_printer, self.printer, os.getcwd()
-                , True)
+            res, _ = get_project_files(
+                self.log_printer, self.printer, os.getcwd(), True)
 
             paths = [
                 os.path.join(os.getcwd(), "src", "file.c"),

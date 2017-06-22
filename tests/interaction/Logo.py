@@ -21,7 +21,8 @@ class TestLogo(unittest.TestCase):
                  "left side."],
                 limit=80)
             self.assertIn(
-                "side content.\x1b[0m \x1b[34mRight side", custom_stdout.getvalue())
+                "side content.\x1b[0m \x1b[34mRight side",
+                custom_stdout.getvalue())
 
     def test_print_welcome_message(self):
         with retrieve_stdout() as custom_stdout:

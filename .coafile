@@ -1,5 +1,5 @@
 [Default]
-files = *.py, coala_quickstart/**/*.py
+files = *.py, coala_quickstart/**/*.py, tests/**.py
 ignore =
     coalib/tests/bearlib/languages/documentation/documentation_extraction_testdata/data.py,
     coalib/tests/collecting/collectors_test_dir/bears/incorrect_bear.py,

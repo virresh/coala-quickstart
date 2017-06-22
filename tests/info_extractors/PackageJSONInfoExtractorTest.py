@@ -26,6 +26,7 @@ invalid_test_file = """
     Some content that is not JSON!
 """
 
+
 class PackageJSONInfoExtractorTest(unittest.TestCase):
 
     def setUp(self):
@@ -63,7 +64,8 @@ class PackageJSONInfoExtractorTest(unittest.TestCase):
             self.assertIn("ManFilesInfo", information_types)
             man_paths_info = extracted_information["ManFilesInfo"]
             self.assertEqual(len(man_paths_info), 1)
-            self.assertEqual(man_paths_info[0].value, ["./man/foo.1", "./man/bar.1"])
+            self.assertEqual(man_paths_info[0].value,
+                             ["./man/foo.1", "./man/bar.1"])
 
             self.assertIn("IncludePathsInfo", information_types)
             include_paths_info = extracted_information["IncludePathsInfo"]
