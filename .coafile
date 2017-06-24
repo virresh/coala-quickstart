@@ -28,3 +28,7 @@ bears = LineLengthBear
 
 [commit]
 bears = GitCommitBear
+
+[yml]
+bears = YAMLLintBear
+files = *.yml, .ci/*.yml, tests/**/*.yml
