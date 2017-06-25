@@ -8,6 +8,9 @@ class InfoExtractor:
     # tuple of file globs supported by the extractor.
     supported_file_globs = tuple()
 
+    # Links to the issues/documentations for relevant specs of supported files.
+    spec_references = []
+
     # tuple of ``Info`` classes that can be extracted.
     supported_info_kinds = (Info,)
 

@@ -18,6 +18,7 @@ class InfoExtractorTest(unittest.TestCase):
             description = 'Another such information.'
 
         class DummyInfoExtractor(InfoExtractor):
+            spec_references = ['some/dummy/link', 'another/dummy/link']
 
             def parse_file(self, fname, file_content):
                 return file_content
@@ -133,6 +134,7 @@ class InfoExtractorTest(unittest.TestCase):
                 self.assertIsInstance(
                     extracted_info[tf]['DummyInfo'][0].extractor,
                     InfoExtractor)
+
 
     def test_multiple_information(self):
 
@@ -266,3 +268,13 @@ class InfoExtractorTest(unittest.TestCase):
                      "information kinds of WrongSupportedInfoExtractor")):
 
                 uut.extract_information()
+
+    def test_spec_references_filed(self):
+        uut = self.DummyInfoExtractor
+        self.assertEqual(len(uut.spec_references), 2)
+        self.assertEqual(
+            uut.spec_references,
+            ['some/dummy/link', 'another/dummy/link'])
+
+        uut = self.DummyMultiInfoExtractor
+        self.assertEqual(uut.spec_references, [])
