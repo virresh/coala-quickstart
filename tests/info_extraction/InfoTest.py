@@ -27,9 +27,11 @@ class InfoTest(unittest.TestCase):
         class InfoA(Info):
             description = 'Information A'
             value_type = (str, int)
+            example_values = ['coala', 420]
 
         class InfoB(Info):
             description = "Info class without value_type"
+            example_values = [["literally", "anything"]]
 
         self.info_a = InfoA(
             'source_file',
@@ -43,7 +45,8 @@ class InfoTest(unittest.TestCase):
         self.assertEqual(self.base_info.name, 'Info')
         self.assertEqual(self.base_info.value, 'base_info_value')
         self.assertEqual(self.base_info.source, 'source_file')
-        self.assertEqual(self.base_info.description, 'Some information')
+        self.assertEqual(self.base_info.description, 'Some Description.')
+        self.assertEqual(len(self.base_info.example_values), 0)
         self.assertIsInstance(self.base_info.extractor, InfoExtractor)
 
     def test_derived_instances(self):
@@ -52,6 +55,7 @@ class InfoTest(unittest.TestCase):
         self.assertEqual(self.info_a.source, 'source_file')
         self.assertEqual(self.info_a.extra_param, 'extra_param_value')
         self.assertEqual(self.info_a.description, 'Information A')
+        self.assertEqual(self.info_a.example_values, ['coala', 420])
 
     def test_value_type(self):
         with self.assertRaisesRegexp(

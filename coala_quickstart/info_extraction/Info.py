@@ -2,10 +2,13 @@ from coala_quickstart.info_extraction.Utilities import assert_type_signature
 
 
 class Info:
-    description = 'Some information'
+    description = 'Some Description.'
 
     # type signature for the information value.
     value_type = (object,)
+
+    # Some example values for reference that also match the value_type.
+    example_values = []
 
     def __init__(self,
                  source,
