@@ -106,3 +106,34 @@ class LineBreaksInfo(StyleInfo):
     description = ('Information regarding how line breaks are represented '
                    'i.e. "lf", "cr", or "crlf"')
     value_type = ('lf', 'cr', 'crlf')
+
+
+class MentionedTasksInfo(Info):
+    description = "Names of the tasks mentioned in the project configuration."
+    value_type = ([str],)
+    example_values = [['csslint', 'copy', 'quint', 'uglify']]
+
+
+class LintTaskInfo(Info):
+    description = "Information about a task used in project."
+    value_type = (str,)
+    example_values = ['csslint', 'jshint']
+
+    def __init__(self,
+                 source,
+                 value,
+                 extractor=None,
+                 include_paths=None,
+                 ignore_paths=None,
+                 config={}):
+        """
+        :param include_paths: list of file globs on which the
+                              lint task is being run.
+        :param ignore_paths:  list of file globs which are ignored
+                              by the lint task.
+        :param config:        dict of configuration settings of the
+                              linter and their values.
+        """
+        super().__init__(
+            source, value, include_paths=include_paths,
+            ignore_paths=ignore_paths, config=config)
