@@ -1,3 +1,4 @@
 coala_bears~=0.11
 coala_utils~=0.4
 gemfileparser~=0.6.2
+pyjsparser~=2.4.5
