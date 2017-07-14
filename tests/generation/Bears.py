@@ -11,7 +11,6 @@ from coala_quickstart.generation.Bears import (
     filter_relevant_bears, print_relevant_bears)
 from coala_quickstart.coala_quickstart import main
 from coala_quickstart.coala_quickstart import _get_arg_parser
-from coala_quickstart.Constants import IMPORTANT_BEAR_LIST
 from coala_quickstart.generation.InfoCollector import collect_info
 from tests.TestUtilities import bear_test_module, generate_files
 
