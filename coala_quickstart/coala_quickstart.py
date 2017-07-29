@@ -1,5 +1,7 @@
 import argparse
+import logging
 import os
+import sys
 
 from pyprint.ConsolePrinter import ConsolePrinter
 
@@ -57,6 +59,7 @@ def main():
     arg_parser = _get_arg_parser()
     args = arg_parser.parse_args()
 
+    logging.basicConfig(stream=sys.stdout)
     printer = ConsolePrinter()
     log_printer = LogPrinter(printer)
 
