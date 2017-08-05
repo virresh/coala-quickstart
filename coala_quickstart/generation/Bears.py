@@ -42,7 +42,8 @@ def filter_relevant_bears(used_languages,
     bears_by_lang = {
         lang: set(inverse_dicts(*get_filtered_bears([lang],
                                                     log_printer,
-                                                    arg_parser)).keys())
+                                                    arg_parser,
+                                                    silent=True)).keys())
         for lang, _ in used_languages
     }
 
