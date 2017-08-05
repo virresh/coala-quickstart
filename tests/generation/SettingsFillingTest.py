@@ -184,6 +184,47 @@ class SettingsFillingTest(unittest.TestCase):
         self.assertEqual(new_section['key'].value, 'val')
         self.assertEqual(len(new_section.contents), 3)
 
+    def test_fill_section_boolean_setting(self):
+        self.section = Section('test')
+        sections = {'test': self.section}
+        self.section.append(Setting('bears', 'SpaceConsistencyTestBear'))
+
+        with simulate_console_inputs(" hell yeah!!! ") as generator, \
+                bear_test_module():
+            local_bears, global_bears = fill_settings(
+                sections, acquire_settings, self.log_printer,
+                fill_section_method=fill_section,
+                extracted_info={})
+            self.assertEqual(generator.last_input, 0)
+
+        self.assertEqual(bool(self.section['use_spaces']), True)
+
+        self.section = Section('test')
+        sections = {'test': self.section}
+        self.section.append(Setting('bears', 'SpaceConsistencyTestBear'))
+        with simulate_console_inputs("not in a million years") as generator, \
+                bear_test_module():
+            local_bears, global_bears = fill_settings(
+                sections, acquire_settings, self.log_printer,
+                fill_section_method=fill_section,
+                extracted_info={})
+            self.assertEqual(generator.last_input, 0)
+
+        self.assertEqual(bool(self.section['use_spaces']), False)
+
+        self.section = Section('test')
+        sections = {'test': self.section}
+        self.section.append(Setting('bears', 'SpaceConsistencyTestBear'))
+        with simulate_console_inputs("don't know", "nah") as generator, \
+                bear_test_module():
+            local_bears, global_bears = fill_settings(
+                sections, acquire_settings, self.log_printer,
+                fill_section_method=fill_section,
+                extracted_info={})
+            self.assertEqual(generator.last_input, 1)
+
+        self.assertEqual(bool(self.section['use_spaces']), False)
+
     def test_dependency_resolving(self):
         sections = {'test': self.section}
         self.section['bears'] = 'DependentBear'
