@@ -34,12 +34,13 @@ class StyleInfo(Info):
                  source,
                  value,
                  extractor=None,
-                 scope=["**"]):
+                 scope=["**"],
+                 **kwargs):
         """
         :param scope: list of files to which the styling information
                       is applicable.
         """
-        super().__init__(source, value, extractor, scope=scope)
+        super().__init__(source, value, extractor, scope=scope, **kwargs)
 
 
 class PathsInfo(Info):

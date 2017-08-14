@@ -1,4 +1,5 @@
 import os
+import re
 import unittest
 
 from coala_quickstart.info_extractors.EditorconfigInfoExtractor import (
@@ -68,6 +69,33 @@ class EditorconfigInfoExtractorTest(unittest.TestCase):
 
             information_types = extracted_info.keys()
 
+            test_filenames = {
+                '*': {
+                    'valid': ['hello.js', 'hello.py'],
+                    'invalid': []
+                },
+                '*.{js,py}': {
+                    'valid': ['hello.py', 'hello.js'],
+                    'invalid': ['hello.c']
+                },
+                '*.py': {
+                    'valid': ['some_file.py', 'hello.py'],
+                    'invalid': ['some.js', 'py']
+                },
+                'Makefile': {
+                    'valid': ['Makefile'],
+                    'invalid': ['NotAMakeFile']
+                },
+                'lib/**.js': {
+                    'valid': ['lib/foo.js'],
+                    'invalid': ['lib/foo', 'foo.js']
+                },
+                '{package.json,.travis.yml}': {
+                    'valid': ['package.json', '.travis.yml'],
+                    'invalid': ['someting_else']
+                }
+            }
+
             # defined configurations in test '.editorconfig' file
             defined_indent_styles = [
                 ('*.py', 'space'), ('lib/**.js', 'space'), ('Makefile', 'tab'),
@@ -80,11 +108,19 @@ class EditorconfigInfoExtractorTest(unittest.TestCase):
             defined_final_newlines = [('*', True)]
             defined_trim_trailing_whitespaces = [('*.{js,py}', True)]
 
+            for info_name, info in extracted_info.items():
+                for i in info:
+                    for fname in test_filenames[i.container_section]["valid"]:
+                        self.assertRegexpMatches(fname, i.scope[0])
+                    for fname in test_filenames[i.container_section]["invalid"]:
+                        self.assertEqual(re.match(i.scope[0], fname), None)
+
             def compare_extracted_with_defined_info(defined_info,
                                                     info_name):
                 self.assertIn(info_name, information_types)
                 info_to_match = extracted_info[info_name]
-                list_to_match = [(i.scope, i.value) for i in info_to_match]
+                list_to_match = [(i.container_section, i.value)
+                                 for i in info_to_match]
                 self.assertEqual(len(defined_info), len(list_to_match))
                 for info in defined_info:
                     self.assertIn(info, list_to_match)
