@@ -4,6 +4,8 @@ from coala_quickstart.info_extractors.PackageJSONInfoExtractor import (
     PackageJSONInfoExtractor)
 from coala_quickstart.info_extractors.GemfileInfoExtractor import (
     GemfileInfoExtractor)
+from coala_quickstart.info_extractors.GruntfileInfoExtractor import (
+    GruntfileInfoExtractor)
 
 
 def collect_info(project_dir):
@@ -20,8 +22,11 @@ def collect_info(project_dir):
     gemfile_info = GemfileInfoExtractor(
         ["Gemfile"], project_dir).extract_information()
 
+    gruntfile_info = GruntfileInfoExtractor(
+        ["Gruntfile.js"], project_dir).extract_information()
+
     extracted_info = aggregate_info([
-        editorconfig_info, package_json_info, gemfile_info])
+        editorconfig_info, package_json_info, gemfile_info, gruntfile_info])
 
     return extracted_info
 

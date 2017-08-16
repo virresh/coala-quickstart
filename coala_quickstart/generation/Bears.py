@@ -9,6 +9,7 @@ from coala_quickstart.Constants import (
     IMPORTANT_BEAR_LIST, ALL_CAPABILITIES, DEFAULT_CAPABILTIES)
 from coala_quickstart.Strings import BEAR_HELP
 from coala_quickstart.generation.SettingsFilling import is_autofill_possible
+from coalib.bearlib.abstractions.LinterClass import LinterClass
 from coalib.settings.ConfigurationGathering import get_filtered_bears
 from coalib.misc.DictUtilities import inverse_dicts
 from coalib.output.printers.LogPrinter import LogPrinter
@@ -91,14 +92,23 @@ def filter_relevant_bears(used_languages,
                 lang_bears, desired_capabilities)
             candidate_bears[lang] = capable_bears
 
-    project_dependency_info = extracted_info.get("ProjectDependencyInfo")
+    lint_task_info = extracted_info.get("LintTaskInfo", [])
+    project_dependency_info = extracted_info.get("ProjectDependencyInfo", [])
+
+    # Use lint_task_info to propose bears to user.
+    for lang, lang_bears in candidate_bears.items():
+        matching_linter_bears = get_matching_linter_bears(
+                lang_bears, lint_task_info)
+        to_propose_bears[lang] = matching_linter_bears
 
     # Use project_dependency_info to propose bears to user.
-    if project_dependency_info:
-        for lang, lang_bears in candidate_bears.items():
-            matching_dep_bears = get_bears_with_matching_dependencies(
-                lang_bears, project_dependency_info)
-            to_propose_bears[lang] = set(matching_dep_bears)
+    for lang, lang_bears in candidate_bears.items():
+        matching_dep_bears = get_bears_with_matching_dependencies(
+            lang_bears, project_dependency_info)
+        if to_propose_bears.get(lang):
+            to_propose_bears[lang].update(matching_dep_bears)
+        else:
+            to_propose_bears[lang] = matching_dep_bears
 
     for lang, lang_bears in to_propose_bears.items():
         for bear in lang_bears:
@@ -294,6 +304,35 @@ def get_bears_with_matching_dependencies(bears, dependency_info):
         if bear.REQUIREMENTS and all_req_satisfied:
             result.add(bear)
     return result
+
+
+def get_matching_linter_bears(bears, lint_tasks_info):
+    """
+    Matches the `REQUIREMENTS` filed of bears against a list
+    of ``LintTasksInfo`` instances to return the bears
+    that match the dependency requirements.
+
+    :param bears:
+        list of Bears
+    :param dependency_info:
+        list of ``LintTasksInfo`` instances.
+    :return:
+        list of Bears which wrap the linters in the
+        given `lint_task_info` list.
+    """
+    matched_bears = set()
+    for task in lint_tasks_info:
+        for bear in bears:
+            if (issubclass(bear, LinterClass) and
+                    bear.get_executable() == task.value):
+                matched_bears.add(bear)
+                break
+            for req in bear.REQUIREMENTS:
+                if req.package == task.value:
+                    matched_bears.add(bear)
+                    break
+
+    return matched_bears
 
 
 def get_bears_with_given_capabilities(bears, capabilities):

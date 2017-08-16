@@ -53,6 +53,57 @@ gem "scss_lint"
 gem "sqlint"
 """
 
+gruntfile = """
+'use strict';
+
+/* jshint node: true */
+module.exports = function ( grunt ) {
+    grunt.loadNpmTasks( 'grunt-contrib-csslint' );
+    grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+    grunt.loadNpmTasks( 'grunt-contrib-some_lint' );
+    // Project configuration.
+    grunt.initConfig( {
+        jshint: {
+            options: {
+                jshintrc: true
+            },
+            all: [
+                '*.js',
+                'src/*.js',
+                'rules/**/*.js',
+                'test/**/*.js'
+            ]
+        },
+        csslint: {
+            all: [
+                'css/**/*.css'
+            ]
+        },
+        some_lint: {
+            ignore: [
+                'foo/**.bar'
+            ]
+        },
+        watch: {
+            files: [
+                '.{csslintrc,jshintignore,jshintrc}',
+                '<%= jshint.all %>',
+                '<%= csslint.all %>'
+            ],
+            tasks: 'lint'
+        }
+    } );
+
+    // Default task.
+    grunt.registerTask( 'lint', [
+        'jshint', 'csslint', 'some_lint'] );
+    grunt.registerTask( 'default', [ 'lint', 'test' ] );
+};
+"""
+
+context_filenames = [".editorconfig", "package.json", "Gemfile", "Gruntfile.js"]
+context_file_contents = [editorconfig, package_json, gemfile, gruntfile]
+
 
 class TestBears(unittest.TestCase):
 
@@ -91,8 +142,8 @@ class TestBears(unittest.TestCase):
 
         # results with extracted information
         res_2 = []
-        with generate_files([".editorconfig", "package.json", "Gemfile"],
-                            [editorconfig, package_json, gemfile],
+        with generate_files(context_filenames,
+                            context_file_contents,
                             self.project_dir) as gen_files:
             extracted_info = collect_info(self.project_dir)
             res_2 = filter_relevant_bears(languages,
@@ -128,8 +179,8 @@ class TestBears(unittest.TestCase):
 
             # results with extracted information
             res_2 = []
-            with generate_files([".editorconfig", "package.json", "Gemfile"],
-                                [editorconfig, package_json, gemfile],
+            with generate_files(context_filenames,
+                                context_file_contents,
                                 self.project_dir):
                 with simulate_console_inputs("Yes") as generator:
                     extracted_info = collect_info(self.project_dir)
@@ -151,8 +202,8 @@ class TestBears(unittest.TestCase):
 
             # Simulating the situation when user rejects the bear
             res_2 = []
-            with generate_files([".editorconfig", "package.json", "Gemfile"],
-                                [editorconfig, package_json, gemfile],
+            with generate_files(context_filenames,
+                                context_file_contents,
                                 self.project_dir):
                 with simulate_console_inputs(
                         "Some random text which will not be accepted",
@@ -195,6 +246,35 @@ class TestBears(unittest.TestCase):
 
             expected_results = {
                 "All": set(["SmellCapabilityBear"])
+            }
+            for lang, lang_bears in expected_results.items():
+                for bear in lang_bears:
+                    res_bears = [b.name for b in res[lang]]
+                    self.assertIn(bear, res_bears)
+
+    def test_filter_relevant_bears_gruntfile_present(self):
+        # Reset the IMPORTANT_BEARS_LIST
+        import coala_quickstart.generation.Bears as Bears
+        Bears.IMPORTANT_BEARS_LIST = {
+            "JavaScript": "DoesNotExistBear",
+            "Python": "DoesNotExistAsWellBear"
+        }
+
+        sys.argv.append('--no-filter-by-capabilities')
+
+        with bear_test_module():
+            languages = [('JavaScript', 70), ('Python', 20)]
+            res = {}
+            with generate_files(["Gruntfile.js"],
+                                [gruntfile],
+                                self.project_dir) as gen_files:
+                extracted_info = collect_info(self.project_dir)
+                res = filter_relevant_bears(languages,
+                                            self.printer,
+                                            self.arg_parser,
+                                            extracted_info)
+            expected_results = {
+                "JavaScript": set(["SomeLinterBear"]),
             }
             for lang, lang_bears in expected_results.items():
                 for bear in lang_bears:
@@ -255,8 +335,8 @@ class TestBears(unittest.TestCase):
                 languages, self.printer, self.arg_parser, {})
 
             res_2 = []
-            with generate_files([".editorconfig", "package.json", "Gemfile"],
-                                [editorconfig, package_json, gemfile],
+            with generate_files(context_filenames,
+                                context_file_contents,
                                 self.project_dir):
                 with simulate_console_inputs("Yes") as generator:
                     extracted_info = collect_info(self.project_dir)
