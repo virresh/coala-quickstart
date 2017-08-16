@@ -60,7 +60,7 @@ def fill_section(section,
         setting_bears = needed_settings[setting]["bears"]
         setting_help_text = needed_settings[setting]["help_text"]
         to_fill_values = list(autofill_value_if_possible(
-            setting, section.name, setting_bears, extracted_info))
+            setting, section, setting_bears, extracted_info))
 
         if len(set(to_fill_values)) == 1:
             section[setting] = to_fill_values[0]
@@ -117,7 +117,7 @@ def autofill_value_if_possible(setting_key,
                     mapping["info_kind"].__name__)
                 if values:
                     for val in values:
-                        if scope.check_is_applicable_information(val):
+                        if scope.check_is_applicable_information(section, val):
                             yield mapping["mapper_function"](val)
 
 
@@ -136,7 +136,7 @@ def is_autofill_possible(setting_key,
                 values = extracted_info.get(
                     mapping["info_kind"].__name__)
                 for val in values:
-                    if scope.check_is_applicable_information(val):
+                    if scope.check_is_applicable_information(section, val):
                         return True
     return False
 

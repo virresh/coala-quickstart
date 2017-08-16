@@ -1,6 +1,8 @@
 from coala_quickstart.info_extraction.InfoScope import InfoScope
 from coala_quickstart.info_extraction.Information import (
     IndentStyleInfo, IndentSizeInfo, TrailingWhitespaceInfo, FinalNewlineInfo)
+from coala_quickstart.info_extractors.EditorconfigInfoExtractor import (
+    editorconfig_file_match_method)
 
 
 INFO_SETTING_MAPS = {
@@ -8,6 +10,7 @@ INFO_SETTING_MAPS = {
         {
             "scope": InfoScope(
                 level="global",
+                section_match_method=editorconfig_file_match_method,
                 allowed_sources=[".editorconfig"]),
             "info_kind": IndentStyleInfo,
             "mapper_function": (
@@ -17,6 +20,7 @@ INFO_SETTING_MAPS = {
         {
             "scope": InfoScope(
                 level="global",
+                section_match_method=editorconfig_file_match_method,
                 allowed_sources=[".editorconfig"]),
             "info_kind": IndentSizeInfo,
             "mapper_function": lambda x: x.value
@@ -25,6 +29,7 @@ INFO_SETTING_MAPS = {
         {
             "scope": InfoScope(
                 level="global",
+                section_match_method=editorconfig_file_match_method,
                 allowed_sources=[".editorconfig"]),
             "info_kind": TrailingWhitespaceInfo,
             "mapper_function": lambda x: str(x.value)
@@ -33,6 +38,7 @@ INFO_SETTING_MAPS = {
         {
             "scope": InfoScope(
                 level="global",
+                section_match_method=editorconfig_file_match_method,
                 allowed_sources=[".editorconfig"]),
             "info_kind": FinalNewlineInfo,
             "mapper_function": lambda x: str(x.value)

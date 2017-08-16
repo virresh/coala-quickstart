@@ -1,6 +1,7 @@
 import os
 import unittest
 
+from coalib.settings.Section import Section
 from coala_quickstart.info_extraction.Info import Info
 from coala_quickstart.info_extraction.InfoExtractor import InfoExtractor
 from coala_quickstart.info_extraction.InfoScope import InfoScope
@@ -35,7 +36,7 @@ class InfoA(Info):
 class InfoScopeTest(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.section = Section('test')
 
     def test_api(self):
         uut = InfoScope('bear',
@@ -106,27 +107,37 @@ class InfoScopeTest(unittest.TestCase):
 
         # restriction on allowed_sources
         uut = InfoScope('global', allowed_sources=['source_file_1'])
-        self.assertTrue(uut.check_is_applicable_information(info_1))
-        self.assertFalse(uut.check_is_applicable_information(info_2))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_1))
+        self.assertFalse(uut.check_is_applicable_information(
+            self.section, info_2))
 
         # restriction on allowed_extractors
         uut = InfoScope('global', allowed_extractors=(DummyInfoExtractor,))
-        self.assertTrue(uut.check_is_applicable_information(info_1))
-        self.assertFalse(uut.check_is_applicable_information(info_2))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_1))
+        self.assertFalse(uut.check_is_applicable_information(
+            self.section, info_2))
 
         # restriction on both
         uut = InfoScope('global',
                         allowed_sources=['source_file_1'],
                         allowed_extractors=(DummyInfoExtractor,))
-        self.assertTrue(uut.check_is_applicable_information(info_1))
-        self.assertFalse(uut.check_is_applicable_information(info_2))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_1))
+        self.assertFalse(uut.check_is_applicable_information(
+            self.section, info_2))
 
         # no restrictions
         uut = InfoScope('global')
-        self.assertTrue(uut.check_is_applicable_information(info_1))
-        self.assertTrue(uut.check_is_applicable_information(info_2))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_1))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_2))
 
         # make sure `level` doesn't affect applicability of ``Info`` instance
         uut = InfoScope('bear')
-        self.assertTrue(uut.check_is_applicable_information(info_1))
-        self.assertTrue(uut.check_is_applicable_information(info_2))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_1))
+        self.assertTrue(uut.check_is_applicable_information(
+            self.section, info_2))

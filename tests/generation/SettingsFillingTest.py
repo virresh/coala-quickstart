@@ -14,6 +14,8 @@ from coalib.settings.SectionFilling import fill_settings
 from coala_quickstart.generation.SettingsFilling import (
     fill_section, acquire_settings)
 from coala_quickstart.generation.InfoCollector import collect_info
+from coala_quickstart.info_extractors.EditorconfigInfoExtractor import (
+    editorconfig_file_match_method)
 from tests.TestUtilities import bear_test_module, generate_files
 
 
@@ -32,6 +34,20 @@ editorconfig_2 = """
 # This contains conflicting indent style with editorconfig_1
 indent_style = space
 [**/abc/]
+indent_style = tab
+"""
+
+editorconfig_3 = """
+[*.py]
+indent_style = space
+[*.js]
+indent_style = tab
+"""
+
+editorconfig_4 = """
+[*.py]
+indent_style = space
+[*.{js,py}]
 indent_style = tab
 """
 
@@ -132,6 +148,60 @@ class SettingsFillingTest(unittest.TestCase):
 
                 self.assertEqual(len(local_bears['test']), 1)
                 self.assertEqual(len(global_bears['test']), 0)
+
+                prompt_msg = (
+                    'coala-quickstart has detected multiple potential values '
+                    'for the setting "use_spaces"')
+                self.assertIn(prompt_msg, sio.getvalue())
+                self.assertEqual(generator.last_input, 0)
+
+        self.assertEqual(bool(self.section['use_spaces']), False)
+
+    def test_fill_settings_section_match_no_conflicts(self):
+        self.section = Section('test')
+        self.section["files"] = "*.py"
+        sections = {'test': self.section}
+
+        self.section.append(Setting('bears', 'SpaceConsistencyTestBear'))
+
+        with simulate_console_inputs() as generator, bear_test_module():
+            with generate_files([".editorconfig", "hello.py"],
+                                [editorconfig_3, "pass"],
+                                self.project_dir) as gen_files:
+                extracted_info = collect_info(self.project_dir)
+                local_bears, global_bears = fill_settings(
+                    sections, acquire_settings, self.log_printer,
+                    fill_section_method=fill_section,
+                    extracted_info=extracted_info)
+
+                self.assertEqual(len(local_bears['test']), 1)
+                self.assertEqual(len(global_bears['test']), 0)
+                # The value for the setting is automatically taken
+                # from .editorconfig file.
+                self.assertEqual(generator.last_input, -1)
+
+        self.assertEqual(bool(self.section['use_spaces']), True)
+
+    def test_fill_settings_section_match_with_conflicts(self):
+        self.section = Section('test1')
+        self.section["files"] = "hello.py"
+        sections = {'test1': self.section}
+
+        self.section.append(Setting('bears', 'SpaceConsistencyTestBear'))
+
+        with simulate_console_inputs("False") as generator, \
+                bear_test_module(), retrieve_stdout() as sio:
+            with generate_files([".editorconfig", "hello.py"],
+                                [editorconfig_4, "pass"],
+                                self.project_dir):
+                extracted_info = collect_info(self.project_dir)
+                local_bears, global_bears = fill_settings(
+                    sections, acquire_settings, self.log_printer,
+                    fill_section_method=fill_section,
+                    extracted_info=extracted_info)
+
+                self.assertEqual(len(local_bears['test1']), 1)
+                self.assertEqual(len(global_bears['test1']), 0)
 
                 prompt_msg = (
                     'coala-quickstart has detected multiple potential values '

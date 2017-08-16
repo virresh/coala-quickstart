@@ -1,3 +1,5 @@
+import re
+
 from coala_quickstart.info_extractors.EditorconfigParsing import (
     parse_editorconfig_file, translate_editorconfig_section_to_regex)
 from coala_quickstart.info_extraction.InfoExtractor import InfoExtractor
@@ -80,3 +82,24 @@ class EditorconfigInfoExtractor(InfoExtractor):
                                        container_section=section_name))
 
         return results
+
+
+def editorconfig_file_match_method(files, info):
+    """
+    Checks if the ``Info`` instance extracted by EditorconfigInfoExtractor
+    is applicable to all the files passed.
+
+    :param files: list of files to be checked.
+    :param info:  An ``Info`` instance stored inside an
+                  ``EditorconfigInfoExtractor`` object.
+    """
+    if info.source != ".editorconfig":
+        raise ValueError("The ``editorconfig_file_match_method`` received an"
+                         "``Info`` instance not extracted by "
+                         "``EditorconfigInfoExtractor``.")
+    accepted_files_regex = info.scope[0]
+
+    for fname in files:
+        if not re.match(accepted_files_regex, fname):
+            return False
+    return True
