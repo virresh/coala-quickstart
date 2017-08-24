@@ -16,22 +16,24 @@ with open('test-requirements.txt') as requirements:
 
 if __name__ == "__main__":
     setup(name='coala-quickstart',
-          version='0.3.0',
-          description='Quickstart for coala (Code Analysis Application)',
+          version='0.4.0',
+          description='A quickstart tool for for coala '
+                      '(Code Analysis Application)',
           author="The coala developers",
-          maintainer="Adrian Zatreanu, Alexandros Dimos,"
+          maintainer="Satwik Kansal, Adrian Zatreanu, Alexandros Dimos, "
                      "Adhityaa Chandrasekar",
-          maintainer_email=('adrianzatreanu1@gmail.com, '
+          maintainer_email=('satwikkansal@gmail.com, '
+                            'adrianzatreanu1@gmail.com, '
                             'alexandros.dimos.95@gmail.com, '
                             'c.adhityaa@gmail.com'),
-          url='http://coala.rtfd.org/',
+          url='https://github.com/coala/coala-quickstart',
           platforms='any',
           packages=find_packages(exclude=["build.*", "*.tests.*", "*.tests"]),
           install_requires=required,
           tests_require=test_required,
           license="AGPL-3.0",
           long_description="coala-quickstart is a tool to help you "
-                           "set up coala easier "
+                           "quickly and easily get started with "
                            "coala - the COde AnaLysis Application.",
           entry_points={
               "console_scripts": [
