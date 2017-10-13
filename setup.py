@@ -17,8 +17,7 @@ with open('test-requirements.txt') as requirements:
 if __name__ == "__main__":
     setup(name='coala-quickstart',
           version='0.4.0',
-          description='A quickstart tool for for coala '
-                      '(Code Analysis Application)',
+          description='A quickstart tool for coala',
           author="The coala developers",
           maintainer="Satwik Kansal, Adrian Zatreanu, Alexandros Dimos, "
                      "Adhityaa Chandrasekar",
@@ -34,7 +33,7 @@ if __name__ == "__main__":
           license="AGPL-3.0",
           long_description="coala-quickstart is a tool to help you "
                            "quickly and easily get started with "
-                           "coala - the COde AnaLysis Application.",
+                           "coala.",
           entry_points={
               "console_scripts": [
                   "coala-quickstart = coala_quickstart.coala_quickstart:main"
