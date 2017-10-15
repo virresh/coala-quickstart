@@ -36,6 +36,9 @@ coala-quickstart automatically creates a .coafile for use by coala.
     )
 
     arg_parser.add_argument(
+        '-v', '--version', action='version', version='0.4.0')
+
+    arg_parser.add_argument(
         '-C', '--non-interactive', const=True, action='store_const',
         help='run coala-quickstart in non interactive mode')
 

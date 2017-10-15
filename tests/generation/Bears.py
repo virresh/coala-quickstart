@@ -357,3 +357,17 @@ class TestBears(unittest.TestCase):
                                     if bear not in res_1[lang]]
                 for bear in additional_bears_by_lang[lang]:
                     self.assertIn(bear, additional_bears)
+
+    def test_print_coala_quickstart_version_short(self):
+        sys.argv.append('-v')
+        with retrieve_stdout() as custom_stdout:
+            with self.assertRaises(SystemExit) as cm:
+                main()
+            self.assertEquals('0.4.0\n', custom_stdout.getvalue())
+
+    def test_print_coala_quickstart_version_long(self):
+        sys.argv.append('--version')
+        with retrieve_stdout() as custom_stdout:
+            with self.assertRaises(SystemExit) as cm:
+                main()
+            self.assertEquals('0.4.0\n', custom_stdout.getvalue())
