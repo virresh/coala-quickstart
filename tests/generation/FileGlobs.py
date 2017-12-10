@@ -2,7 +2,6 @@ import os
 import unittest
 
 from pyprint.ConsolePrinter import ConsolePrinter
-from coalib.output.printers.LogPrinter import LogPrinter
 from coala_utils.ContextManagers import (
     simulate_console_inputs, suppress_stdout)
 from coala_utils.FilePathCompleter import FilePathCompleter
@@ -15,7 +14,7 @@ class TestQuestion(unittest.TestCase):
 
     def setUp(self):
         self.printer = ConsolePrinter()
-        self.log_printer = LogPrinter(self.printer)
+        self.log_printer = None
         self.file_path_completer = FilePathCompleter()
 
     def test_get_project_files(self):

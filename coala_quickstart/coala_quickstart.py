@@ -5,8 +5,6 @@ import sys
 
 from pyprint.ConsolePrinter import ConsolePrinter
 
-from coalib.output.printers.LogPrinter import LogPrinter
-
 from coala_utils.FilePathCompleter import FilePathCompleter
 from coala_utils.Question import ask_question
 
@@ -65,7 +63,7 @@ def main():
 
     logging.basicConfig(stream=sys.stdout)
     printer = ConsolePrinter()
-    log_printer = LogPrinter(printer)
+    logging.getLogger(__name__)
 
     fpc = None
     project_dir = os.getcwd()
@@ -81,7 +79,7 @@ def main():
         fpc.deactivate()
 
     project_files, ignore_globs = get_project_files(
-        log_printer,
+        None,
         printer,
         project_dir,
         fpc,

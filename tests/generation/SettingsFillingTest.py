@@ -1,13 +1,11 @@
 import os
 import unittest
 
-from pyprint.ConsolePrinter import ConsolePrinter
 
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.bears.LocalBear import LocalBear
 from coala_utils.ContextManagers import (
     simulate_console_inputs, retrieve_stdout)
-from coalib.output.printers.LogPrinter import LogPrinter
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 from coalib.settings.SectionFilling import fill_settings
@@ -78,7 +76,7 @@ class SettingsFillingTest(unittest.TestCase):
 
     def setUp(self):
         self.project_dir = os.path.dirname(os.path.realpath(__file__))
-        self.log_printer = LogPrinter(ConsolePrinter())
+        self.log_printer = None
         self.section = Section('test')
         self.section.append(Setting('key', 'val'))
 

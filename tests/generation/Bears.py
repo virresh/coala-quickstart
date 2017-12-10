@@ -5,7 +5,6 @@ from copy import deepcopy
 
 
 from pyprint.ConsolePrinter import ConsolePrinter
-from coalib.output.printers.LogPrinter import LogPrinter
 from coala_utils.ContextManagers import (
     retrieve_stdout, simulate_console_inputs)
 from coala_quickstart.generation.Bears import (
@@ -114,7 +113,7 @@ class TestBears(unittest.TestCase):
         os.makedirs(self.project_dir, exist_ok=True)
         self.arg_parser = _get_arg_parser()
         self.printer = ConsolePrinter()
-        self.log_printer = LogPrinter(self.printer)
+        self.log_printer = None
         self.old_argv = deepcopy(sys.argv)
         del sys.argv[1:]
 

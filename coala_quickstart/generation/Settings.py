@@ -2,12 +2,9 @@ import os
 from collections import OrderedDict
 from datetime import date
 
-from pyprint.NullPrinter import NullPrinter
-from pyprint.ConsolePrinter import ConsolePrinter
 from coalib.settings.SectionFilling import fill_settings
 from coala_quickstart.generation.SettingsFilling import (
     fill_section, acquire_settings)
-from coalib.output.printers.LogPrinter import LogPrinter
 from coala_quickstart.generation.Utilities import (
     split_by_language, get_extensions)
 from coalib.settings.Section import Section
@@ -36,7 +33,11 @@ def generate_section(section_name, extensions_used, bears):
     return section
 
 
-def generate_ignore_field(project_dir, languages, extset, ignore_globs):
+def generate_ignore_field(project_dir,
+                          languages,
+                          extset,
+                          ignore_globs,
+                          null_printer=None):
     """
     Generate the ignore field for the ``default`` section.
 
@@ -50,7 +51,6 @@ def generate_ignore_field(project_dir, languages, extset, ignore_globs):
     :return:
         A comma-separated string containing the globs to ignore.
     """
-    null_printer = LogPrinter(NullPrinter())
 
     all_files = set(collect_files(
         "**",
@@ -67,8 +67,13 @@ def generate_ignore_field(project_dir, languages, extset, ignore_globs):
     return ", ".join(ignores)
 
 
-def generate_settings(project_dir, project_files, ignore_globs, relevant_bears,
-                      extracted_info, incomplete_sections=False):
+def generate_settings(project_dir,
+                      project_files,
+                      ignore_globs,
+                      relevant_bears,
+                      extracted_info,
+                      incomplete_sections=False,
+                      log_printer=None):
     """
     Generates the settings for the given project.
 
@@ -120,8 +125,6 @@ def generate_settings(project_dir, project_files, ignore_globs, relevant_bears,
                 "all." + lang,
                 extset[lang],
                 relevant_bears[lang_map[lang]])
-
-    log_printer = LogPrinter(ConsolePrinter())
 
     if not incomplete_sections:
         fill_settings(settings,
