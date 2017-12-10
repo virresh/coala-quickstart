@@ -32,12 +32,12 @@ package_json = """
 {
   "name": "awesome-packages",
   "dependencies": {
-    "babel-eslint": "~6",
-    "eslint": "~2",
-    "eslint-plugin-import": "~1",
+    "babel-eslint": "~8",
+    "eslint": "~3",
+    "eslint-plugin-import": "~2",
     "bootlint": "~0",
     "csslint": "~1",
-    "happiness": "~7.1.2",
+    "happiness": "~10",
     "jshint": "~2",
     "some_linter": "~2"
     }
@@ -142,6 +142,10 @@ class TestBears(unittest.TestCase):
 
         # results with extracted information
         res_2 = []
+
+        # FIXME: Create and use Test bears with
+        # ``TestUtilites.bear_test_module`` instead of running
+        # tests on actual bears in coala-bears package.
         with generate_files(context_filenames,
                             context_file_contents,
                             self.project_dir) as gen_files:
