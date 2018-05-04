@@ -20,6 +20,7 @@ default_actions =
 
 [autopep8]
 bears = PEP8Bear, PycodestyleBear
+pycodestyle_ignore = E121, E123, E126, E226, E252, W503, W504, W605
 
 default_actions = PEP8Bear: ApplyPatchAction
 
