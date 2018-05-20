@@ -9,6 +9,7 @@ cache:
 
 before_install:
   - pip install setuptools -U
+  - pip install packaging==16.8
   - pip install -r requirements.txt -r test-requirements.txt
 
 script:

@@ -30,6 +30,7 @@ install:
   # Check that we have the expected version and architecture for Python
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  - "%CMD_IN_ENV% python -m pip install packaging==16.8"
   - >
     "%CMD_IN_ENV% python -m pip install --upgrade pip setuptools
   - >
