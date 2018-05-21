@@ -32,9 +32,9 @@ install:
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
   - >
-    "%CMD_IN_ENV% pip install --upgrade pip setuptools
+    "%CMD_IN_ENV% python -m pip install --upgrade pip setuptools
   - >
-    "%CMD_IN_ENV% pip install
+    "%CMD_IN_ENV% python -m pip install
     --cache-dir=C:\\pip_cache -r requirements.txt -r test-requirements.txt
 
 build: false  # Not a C# project, build stuff at the test step instead.
